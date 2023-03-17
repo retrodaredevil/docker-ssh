@@ -21,6 +21,7 @@ jobs:
       matrix:
         context: [ sshd, autossh ]
     steps:
+      # https://github.com/marketplace/actions/checkout
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -33,11 +34,11 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       # https://github.com/marketplace/actions/docker-metadata-action
       - name: ${{ matrix.context }} Extract metadata (tags, labels) for Docker
-#        id: ${{ matrix.context }}-meta
         id: meta
         uses: docker/metadata-action@v4.3.0
         with:
-          images: ${{ env.REGISTRY }}/${{ github.actor }}/${{ matrix.context }}
+#          images: ${{ env.REGISTRY }}/${{ github.actor }}/${{ matrix.context }}
+          images: ${{ env.REGISTRY }}/retrodaredevil/${{ matrix.context }}
 
       # https://github.com/marketplace/actions/build-and-push-docker-images
       - name: ${{ matrix.context }} Build and push Docker image

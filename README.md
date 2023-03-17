@@ -27,7 +27,7 @@ Or instead of `docker run`:
 version: '3.7'
 
 services:
-  ssh-forward-client:
+  ssh-forward-server:
     image: 'ghcr.io/retrodaredevil/sshd:latest'
     restart: unless-stopped
     ports:
