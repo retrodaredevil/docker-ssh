@@ -40,7 +40,9 @@ jobs:
 #          images: ${{ env.REGISTRY }}/${{ github.actor }}/${{ matrix.context }}
           images: ${{ env.REGISTRY }}/retrodaredevil/${{ matrix.context }}
           tags: |
-            type=raw,value=stable,priority=9000,enable=${{ github.event_name == 'release' }}
+            type=raw,value=stable,enable=${{ github.event_name == 'release' }}
+            type=ref,event=branch
+            type=ref,event=tag
 
       # https://github.com/marketplace/actions/build-and-push-docker-images
       - name: ${{ matrix.context }} Build and push Docker image
