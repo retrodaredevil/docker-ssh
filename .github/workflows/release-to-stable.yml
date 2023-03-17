@@ -8,7 +8,9 @@ on:
 jobs:
   merge-to-stable:
     runs-on: ubuntu-latest
+    # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
     permissions:
+      # contents: write is not required if you go to (Repo) Settings > Actions > General > Workflow permissions and grant access
       contents: write
     steps:
       - name: Checkout code
@@ -23,6 +25,7 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@0fafdd62b84042d49ec0cb92d9cac7f7ce4ec79e
         with:
+          # https://github.com/ad-m/github-push-action/issues/96
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: stable
           force: true
