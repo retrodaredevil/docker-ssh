@@ -45,7 +45,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ github.actor }}/${{ matrix.context }}
 
       # https://github.com/marketplace/actions/build-and-push-docker-images
-      - name: Build and push Docker image
+      - name: ${{ matrix.context }} Build and push Docker image
         uses: docker/build-push-action@v4.0.0
         with:
           context: ./${{ matrix.context }}
