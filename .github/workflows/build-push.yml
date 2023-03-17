@@ -2,19 +2,20 @@ name: Create and publish a Docker image
 
 on:
   push:
-    branches: ['main']
+    branches:
+      - latest
+      - stable
+    tags:
+      - 'v*'
 
 env:
   REGISTRY: ghcr.io
-  #IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build-and-push-image:
+  setup:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -26,19 +27,28 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract metadata (tags, labels) for Docker
+  build-push:
+    needs: setup
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        context: [ sshd, autossh ]
+    steps:
+      # https://github.com/marketplace/actions/docker-metadata-action
+      - name: ${{ matrix.context }} Extract metadata (tags, labels) for Docker
+#        id: ${{ matrix.context }}-meta
         id: meta
         uses: docker/metadata-action@v4.3.0
         with:
-          #images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          images: ${{ env.REGISTRY }}/${{ github.actor }}/sshd
+          images: ${{ env.REGISTRY }}/${{ github.actor }}/${{ matrix.context }}
 
       # https://github.com/marketplace/actions/build-and-push-docker-images
       - name: Build and push Docker image
         uses: docker/build-push-action@v4.0.0
         with:
-          context: ./sshd
+          context: ./${{ matrix.context }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
