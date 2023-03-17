@@ -16,6 +16,7 @@ jobs:
       - name: Merge release into stable branch
         run: |
           git checkout -b new-stable
+          git fetch origin
           git checkout stable
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
