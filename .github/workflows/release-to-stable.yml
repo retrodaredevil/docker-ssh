@@ -17,9 +17,9 @@ jobs:
         run: |
           git fetch origin
           git checkout stable
-          git merge --no-ff --allow-unrelated-histories ${{ github.ref }} -m "Merge release into stable branch"
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git merge --no-ff --allow-unrelated-histories ${{ github.ref }} -m "Merge release into stable branch"
       # https://github.com/marketplace/actions/github-push
       - name: Push changes
         uses: ad-m/github-push-action@0fafdd62b84042d49ec0cb92d9cac7f7ce4ec79e
