@@ -8,7 +8,6 @@ on:
 jobs:
   merge-to-stable:
     runs-on: ubuntu-latest
-    permissions:
 
     steps:
       - name: Checkout code
