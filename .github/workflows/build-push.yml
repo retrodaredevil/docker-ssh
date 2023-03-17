@@ -12,10 +12,15 @@ env:
   REGISTRY: ghcr.io
 
 jobs:
-  setup:
+  build-push:
     runs-on: ubuntu-latest
+    needs: setup
     permissions:
       contents: read
+      packages: write
+    strategy:
+      matrix:
+        context: [ sshd, autossh ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -27,16 +32,6 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-  build-push:
-    runs-on: ubuntu-latest
-    needs: setup
-    permissions:
-      contents: read
-      packages: write
-    strategy:
-      matrix:
-        context: [ sshd, autossh ]
-    steps:
       # https://github.com/marketplace/actions/docker-metadata-action
       - name: ${{ matrix.context }} Extract metadata (tags, labels) for Docker
 #        id: ${{ matrix.context }}-meta
