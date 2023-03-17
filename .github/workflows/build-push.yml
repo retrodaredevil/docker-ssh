@@ -40,7 +40,7 @@ jobs:
 #          images: ${{ env.REGISTRY }}/${{ github.actor }}/${{ matrix.context }}
           images: ${{ env.REGISTRY }}/retrodaredevil/${{ matrix.context }}
           tags: |
-            type=raw,value=stable,enable=${{ tag ? 'true' : 'false' }}
+            type=raw,value=stable,enable=${{ startsWith(github.ref, 'refs/tags/') }}
             type=ref,event=branch
             type=ref,event=tag
 
