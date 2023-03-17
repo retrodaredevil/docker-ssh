@@ -8,7 +8,8 @@ on:
 jobs:
   merge-to-stable:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -22,9 +23,6 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@0fafdd62b84042d49ec0cb92d9cac7f7ce4ec79e
         with:
-          # Must go (Project) Settings > Secrets and Variables > New secret: Name: STABLE_TOKEN, Secret: <paste personal access token>
-          # To get personal access token: (User) Settings > Developer Settings > Personal Access Tokens > Create a fine grained token
-          #   Give this access to docker-ssh and grant these repository permissions: Contents: Read and write
-          github_token: ${{ secrets.STABLE_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: stable
           force: true
