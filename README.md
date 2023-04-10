@@ -67,3 +67,6 @@ sudo docker run --rm -p 8022:22 -v "./authorized_keys:/home/ssh/.ssh/authorized_
 * Upload to different central registries
   * https://quay.io/
   * https://hub.docker.com/
+* Create examples. Use similar commands shown here:
+  * https://github.com/David-Lor/Docker-SSH-Port-Forward-Server/blob/develop/setup.py
+  * https://github.com/David-Lor/Docker-SSH-Port-Forward-Client/blob/develop/entrypoint.py
